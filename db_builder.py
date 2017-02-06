@@ -11,18 +11,19 @@ c = db.students
 p = open('peeps.csv','r')
 peep = csv.DictReader(p)
 
-g = open('courses.csv', 'r')
-grades = csv.DictReader(g)
 
 for i in peep:
     doc = {}
     doc['name'] = i['name']
     doc['age'] = int(i['age'])
     doc['id'] = int(i['id'])
+    g = open('courses.csv', 'r')
+    grades = csv.DictReader(g)
     for j in grades:
-        if doc['id'] == int(j['id']):
+        if i['id'] == j['id']:
             doc[j['code']] = j['mark']
+    g.close()
     c.insert_one(doc)
 
-peep.close()
-grades.close()
+p.close()
+g.close()
